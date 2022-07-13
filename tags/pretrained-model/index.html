@@ -68,47 +68,22 @@
 
     <div class="container">
         <div data-pager-shell>
-            <div class="Archives">
+            <ul class="Index">
+  
+    <header class='PageTitle'>
+        <h1>{ pretrained model }</h1>
+    </header>
   
   
-  
-    
-    <section class="TimeSection">
-    <h1 class="time-section-year">
-        2022
-    </h1>
-    <ul class="time-section-list">
+    <li>
+      <article class='ListView'>
+    <header class="title">
       
+        <h1>
+          <a href="/2022/07/13/%E8%AE%BA%E6%96%87-MarkBERT-Marking-Word-Boundaries-Improves-Chinese-BERT/">论文-MarkBERT: Marking Word Boundaries Improves Chinese BERT</a>
+        </h1>
       
-        <li>
-            <a href="/2022/07/13/%E7%AE%97%E6%B3%95-TextCNN/">
-                <h2>算法-TextCNN</h2>
-            </a>
-            <div class='ListMeta'>
-  <time datetime="2022-07-13T06:14:14.000Z" itemprop="datePublished">
-    2022-07-13
-  </time>
-  
-  | 
-  <ul>
-    
-  <li class="meta-text">
-  { <a href="/tags/Algorithm/">Algorithm</a> }
-  </li>
-
-
-  </ul>
-  
-  
-</div>
-
-        </li>
-      
-        <li>
-            <a href="/2022/07/13/%E8%AE%BA%E6%96%87-MarkBERT-Marking-Word-Boundaries-Improves-Chinese-BERT/">
-                <h2>论文-MarkBERT: Marking Word Boundaries Improves Chinese BERT</h2>
-            </a>
-            <div class='ListMeta'>
+      <div class='ListMeta'>
   <time datetime="2022-07-12T16:56:17.000Z" itemprop="datePublished">
     2022-07-13
   </time>
@@ -136,75 +111,22 @@
   
 </div>
 
-        </li>
+    </header>
+    <div>
       
-        <li>
-            <a href="/2022/07/13/Pytorch-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/">
-                <h2>Pytorch-损失函数</h2>
-            </a>
-            <div class='ListMeta'>
-  <time datetime="2022-07-12T16:55:27.000Z" itemprop="datePublished">
-    2022-07-13
-  </time>
-  
-  
-</div>
+        <p>作者单位：腾讯AI实验室、复旦大学</p>
+<p><strong>摘要</strong><br>&emsp;本文提出了一种基于词信息的中文BERT模型——MarkBERT模型。现有的基于单词的BERT模型以单词为基本单位，但由于BERT的词汇量限制，模型只涵盖高频单词，遇到词汇量不足(OOV)的单词时，模型退回到字符层面。与现有作品不同的是，MarkBERT将词汇表保持为汉字，并在相邻的单词之间插入边界标记。这样的设计使模型能够以相同的方式处理任何单词，无论它们是否是OOV单词。此外，我们的模型还有两个额外的好处:第一，它方便在标记的基础上增加词汇水平的学习目标，这是对传统的汉字和句子水平训练前任务的补充;其次，它可以通过将通用标记替换为特定于POS标记的标记，方便地合并更丰富的语义，如单词的POS标记。MarkBERT在MSRA数据集和OntoNotes数据集上的中文命名实体识别水平分别从95.4%和82.8%提高到96.5%和84.2%。与以往基于单词的BERT模型相比，MarkBERT模型在文本分类、关键字识别和语义相似度任务方面取得了更好的准确性。</p>
 
-        </li>
       
-        <li>
-            <a href="/2022/07/13/%E8%AE%BA%E6%96%87-What-Language-Model-Architecture-and-Pretraining-Objective-Work-Best-for-Zero-Shot-Generalization/">
-                <h2>论文-What Language Model Architecture and Pretraining Objective Work Best for Zero-Shot Generalization?</h2>
-            </a>
-            <div class='ListMeta'>
-  <time datetime="2022-07-12T16:37:18.000Z" itemprop="datePublished">
-    2022-07-13
-  </time>
+    </div>
+</article>
+
+    </li>
   
-  | 
-  <ul>
-    
-  <li class="meta-text">
-  { <a href="/tags/zero-shot/">zero-shot</a> }
-  </li>
+</ul>
 
 
-  </ul>
-  
-  
-  / 
-  <ul>
-    
-  <li class="meta-text">
-  { <a href="/categories/paper-reading/">paper reading</a> }
-  </li>
 
-
-  </ul>
-  
-</div>
-
-        </li>
-      
-        <li>
-            <a href="/2022/07/12/hello-world/">
-                <h2>Hello World</h2>
-            </a>
-            <div class='ListMeta'>
-  <time datetime="2022-07-12T12:44:31.937Z" itemprop="datePublished">
-    2022-07-12
-  </time>
-  
-  
-</div>
-
-        </li>
-      
-    </ul>
-</section>
-
-  
-</div>
             <footer>
     <div>© 2022 - John Doe </div>
     <div>
