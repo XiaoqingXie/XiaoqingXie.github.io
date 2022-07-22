@@ -159,9 +159,11 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.array([[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>]])</span><br><span class="line"><span class="built_in">print</span>(a)</span><br></pre></td></tr></table></figure>
 
 <ol start="3">
-<li>Tensor的属性<br>&emsp;每一个Tensor有torch.dtype、torch.device、torch.layout三种属性。<br>&emsp;torch.device标识了torch.Tensor对象再创建后所存储在的设备名称(cpu/gpu)。<br>&emsp;torch.layout表示torch.Tensor内存布局对象。<br>&emsp;例：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.tnesor([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],dtype=torch.float32,device=torch.device(<span class="string">&#x27;cpu&#x27;</span>))</span><br></pre></td></tr></table></figure>
-&emsp;稀疏的张量的定义<br>&emsp;torch.sparse_coo_tensor<br>&emsp;coo类型表示了非零元素的坐标形式</li>
+<li>Tensor的属性</li>
 </ol>
+<p>&emsp;每一个Tensor有torch.dtype、torch.device、torch.layout三种属性。<br>&emsp;torch.device标识了torch.Tensor对象再创建后所存储在的设备名称(cpu/gpu)。<br>&emsp;torch.layout表示torch.Tensor内存布局对象。<br>&emsp;例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.tnesor([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],dtype=torch.float32,device=torch.device(<span class="string">&#x27;cpu&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<p>&emsp;稀疏的张量的定义<br>&emsp;torch.sparse_coo_tensor<br>&emsp;coo类型表示了非零元素的坐标形式</p>
 
       
     </div>
