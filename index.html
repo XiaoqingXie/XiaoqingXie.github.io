@@ -173,6 +173,14 @@
 <p>&emsp;&emsp;矩阵运算<br>&emsp;&emsp;二维矩阵乘法运算操作包括torch.mm()、torch.matmul()、@</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a = torch.ones(<span class="number">2</span>,<span class="number">1</span>)</span><br><span class="line">b = torch.ones(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">torch.mm(a, b)</span><br><span class="line">torch.matmul(a, b)</span><br><span class="line">a @ b</span><br><span class="line">a.matmul(b)</span><br><span class="line">a.mm(b)</span><br></pre></td></tr></table></figure>
 
+<p>&emsp;&emsp;对于高位的Tensor(dim&gt;2)，定义其矩阵乘法仅在最后的两个维度上，要求前面的维度必须保持一致，就像矩阵的索引一样并且运算操作只有torch.matmul().</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a = torch.ones(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">b = torch.ones(<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(a.matmul(b))</span><br><span class="line"><span class="built_in">print</span>(torch.matmul(a,b))</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;幂运算</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(torch.<span class="built_in">pow</span>(a, <span class="number">2</span>))</span><br><span class="line"><span class="built_in">print</span>(a.<span class="built_in">pow</span>(<span class="number">2</span>))</span><br><span class="line"><span class="built_in">print</span>(a**<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(a.pow_(<span class="number">2</span>)) <span class="comment"># 结果赋给a</span></span><br></pre></td></tr></table></figure>
+
+
+
       
     </div>
 </article>
