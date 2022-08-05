@@ -112,6 +112,14 @@
 <p>&emsp;&emsp;幂运算</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(torch.<span class="built_in">pow</span>(a, <span class="number">2</span>))</span><br><span class="line"><span class="built_in">print</span>(a.<span class="built_in">pow</span>(<span class="number">2</span>))</span><br><span class="line"><span class="built_in">print</span>(a**<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(a.pow_(<span class="number">2</span>)) <span class="comment"># 结果赋给a</span></span><br></pre></td></tr></table></figure>
 
+<p>&emsp;&emsp;e的n次方</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(torch.exp(a))</span><br><span class="line">b = a.exp_()</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;开方运算</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(a.sqrt())</span><br><span class="line"><span class="built_in">print</span>(a.sqrt_())</span><br><span class="line"><span class="built_in">print</span>(a)</span><br></pre></td></tr></table></figure>
+
+<p>&emsp;&emsp;对数运算</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(torch.log2(a))</span><br><span class="line"><span class="built_in">print</span>(torch.log10(a))</span><br><span class="line"><span class="built_in">print</span>(torch.log(a))</span><br><span class="line"><span class="built_in">print</span>(torch.log_(a))</span><br></pre></td></tr></table></figure>
 
 
 
