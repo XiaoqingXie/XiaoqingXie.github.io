@@ -76,6 +76,64 @@
     <header class="title">
       
         <h1>
+          <a href="/2022/09/15/%E5%B0%86tensorflow%E6%A8%A1%E5%9E%8B%E6%89%93%E5%8C%85%E6%88%90PB%E6%96%87%E4%BB%B6%E5%8F%8APB%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E6%96%B9%E5%BC%8F/">将tensorflow模型打包成PB文件及PB文件读取方式</a>
+        </h1>
+      
+      <div class='ListMeta'>
+  <time datetime="2022-09-15T11:44:00.000Z" itemprop="datePublished">
+    2022-09-15
+  </time>
+  
+  
+</div>
+
+    </header>
+    <div>
+      
+        <p>完成模型训练之后，为了使模型可以在线上稳定运行，一般需要将其转换成pb文件。</p>
+<ol>
+<li>tensorflow模型文件打包成pb文件<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">os.environ[<span class="string">&quot;CUDA_VISIBLE_DEVICES&quot;</span>] = <span class="string">&quot;&quot;</span>   <span class="comment"># 禁止使用GPU</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"></span><br><span class="line">sys.path.insert(<span class="number">0</span>, <span class="built_in">str</span>(Path.cwd().parents[<span class="number">0</span>].parents[<span class="number">0</span>].parents[<span class="number">0</span>]) )</span><br><span class="line">sys.path.insert(<span class="number">0</span>, <span class="built_in">str</span>(Path.cwd().parents[<span class="number">0</span>].parents[<span class="number">0</span>]))     <span class="comment"># 适配直接cmd运行, 即直接 python model_train.py</span></span><br><span class="line">sys.path.insert(<span class="number">0</span>, <span class="built_in">str</span>(Path.cwd().parents[<span class="number">0</span>]) )</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow <span class="keyword">import</span> graph_util</span><br><span class="line"><span class="comment">#from Recognition64_code.model.recognize64_model import recognize64Model</span></span><br><span class="line"><span class="comment">#from Recognition64_code.components.model_components.model_config import modelConfig</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">tfModel2pdFile</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    将tensorflow模型转换为pb文件</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        将tf模型转换为pb文件</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        self.semantics_model_path = <span class="string">&quot;&quot;</span></span><br><span class="line">        self.pb_model_dir = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">model2pb</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># semantics模型转pb</span></span><br><span class="line">        checkpoint_path = os.path.join(self.semantics_model_path, <span class="string">&quot;best_validation&quot;</span>)</span><br><span class="line">        output_pb_path = os.path.join(self.pb_model_dir, <span class="string">&quot;model.pb&quot;</span>)</span><br><span class="line">        output_node_names = [<span class="string">&quot;input_x&quot;</span>, <span class="string">&quot;keep_prob&quot;</span>,<span class="string">&quot;score/predict&quot;</span>]</span><br><span class="line"></span><br><span class="line">        self._model2pb(checkpoint_path, output_pb_path, output_node_names)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_model2pb</span>(<span class="params">self, ckpt_path, output_pb_path, output_node_names</span>):</span><br><span class="line">        <span class="comment"># 载入拼音模型</span></span><br><span class="line">        <span class="comment"># self.get_all_node(checkpoint_path, &quot;./pinyin_nodes.txt&quot;)    # 当不知道output_node_names时, 可保存所有节点查找.</span></span><br><span class="line"></span><br><span class="line">        saver = tf.train.import_meta_graph(<span class="string">&quot;&#123;&#125;.meta&quot;</span>.<span class="built_in">format</span>(ckpt_path))</span><br><span class="line">        graph = tf.get_default_graph()   <span class="comment"># 获取默认的图</span></span><br><span class="line">                input_graph_def = graph.as_graph_def()   <span class="comment"># 返回一个序列化的图代表当前图</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">            sess.run(tf.global_variables_initializer())</span><br><span class="line">            saver.restore(sess, ckpt_path)       <span class="comment"># 将checkpoint载入到sess</span></span><br><span class="line">            output_graph_def = graph_util.convert_variables_to_constants(sess,input_graph_def=input_graph_def,</span><br><span class="line">                                                                     output_node_names = output_node_names)</span><br><span class="line">            <span class="keyword">with</span> tf.gfile.FastGFile(output_pb_path,<span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                f.write(output_graph_def.SerializeToString())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_all_node</span>(<span class="params">self, ckpt_path, save_path</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        将ckpt_path中的所有节点打印保存到save_path中.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        saver = tf.train.import_meta_graph(ckpt_path + <span class="string">&#x27;.meta&#x27;</span>, clear_devices=<span class="literal">True</span>)</span><br><span class="line">        graph = tf.get_default_graph()</span><br><span class="line">        input_graph_def = graph.as_graph_def()</span><br><span class="line">        <span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">            file=<span class="built_in">open</span>(save_path,<span class="string">&#x27;a+&#x27;</span>)</span><br><span class="line">            <span class="keyword">for</span> n <span class="keyword">in</span> tf.get_default_graph().as_graph_def().node:</span><br><span class="line">                file.write(n.name + <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">            file.close()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;开始进行模型的转换&quot;</span>)</span><br><span class="line">    tf2pb = tfModel2pdFile()</span><br><span class="line">    tf2pb.model2pb()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;模型转换成功！&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+</article>
+
+    </li>
+  
+    <li>
+      <article class='ListView'>
+    <header class="title">
+      
+        <h1>
+          <a href="/2022/09/12/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-%E4%BF%A1%E6%81%AF%E7%AE%80%E5%8F%B2/">读书笔记-信息简史</a>
+        </h1>
+      
+      <div class='ListMeta'>
+  <time datetime="2022-09-11T16:30:31.000Z" itemprop="datePublished">
+    2022-09-12
+  </time>
+  
+  
+</div>
+
+    </header>
+    <div>
+      
+        <p>引言<br>1948年，贝尔实验室发明了晶体管。晶体管引发了电子产业的革命，为电子技术的微型化和普遍应用开辟了道路。另一项发明是对信息定义了单位“比特”，来源于年仅32岁的香农写的论文《通信的数学理论》。<br>进化生物学家理查德道金斯认为“处于所有生物核心的不是火，不是热气，也不是所谓的‘生命火花’，而是信息、字词以及指令……如果你想了解生命，就别去研究那些生机勃勃、动来动去的原生质了，从信息技术的角度想想吧。”生物体中的所有细胞都是一个错综复杂的通信网络中的节点，它们一刻不停地传播和接受信息，不停地编码和解码。进化本身正是生物体和环境之间持续不断的信息交换的具体表现。<br>当光子、电子以及其他基本粒子发生相互作用时，它们实际是在做什么呢？其实是在交换比特、转换量子态以及处理信息，而物理定律就是处理信息时所用的算法。因此，每一颗正在燃烧的恒星、每一个星云、每一粒在云室中留下幽灵般痕迹的粒子，都是一台信息处理器，而宇宙也在计算着自己的命运。</p>
+<p>第一章<br>会说话的鼓（似是而非的编码）<br>和非洲敲鼓传递信息相比，作者先介绍了烽火、磁石、摩斯密码等古老的传递信息的方法。</p>
+
+      
+    </div>
+</article>
+
+    </li>
+  
+    <li>
+      <article class='ListView'>
+    <header class="title">
+      
+        <h1>
           <a href="/2022/08/19/Linux-iconv%E5%91%BD%E4%BB%A4/">Linux-iconv命令</a>
         </h1>
       
@@ -385,61 +443,6 @@
 
 
 
-
-      
-    </div>
-</article>
-
-    </li>
-  
-    <li>
-      <article class='ListView'>
-    <header class="title">
-      
-        <h1>
-          <a href="/2022/07/18/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Hadoop/">学习笔记-Hadoop</a>
-        </h1>
-      
-      <div class='ListMeta'>
-  <time datetime="2022-07-18T08:26:44.000Z" itemprop="datePublished">
-    2022-07-18
-  </time>
-  
-  
-</div>
-
-    </header>
-    <div>
-      
-        
-      
-    </div>
-</article>
-
-    </li>
-  
-    <li>
-      <article class='ListView'>
-    <header class="title">
-      
-        <h1>
-          <a href="/2022/07/18/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-Flink/">学习笔记-Flink</a>
-        </h1>
-      
-      <div class='ListMeta'>
-  <time datetime="2022-07-18T08:26:32.000Z" itemprop="datePublished">
-    2022-07-18
-  </time>
-  
-  
-</div>
-
-    </header>
-    <div>
-      
-        <p><a target="_blank" rel="noopener" href="https://flink.apache.org/">Flink官网</a></p>
-<p>学习Flink之前先了解两个概念：无界流和有界流<br>任何类型的数据都是作为事件流产生的。信用卡交易，传感器测量，机器日志或网站/移动应用程序上的用户交互，所有这些数据都作为流生成。<br>数据可以作为无界或有界流处理。<br><strong>无界流</strong>：有一个开始但是没有结束，它们不会在生成时终止并提供数据，必须连续处理无界流，也就是说必须在获取后立即处理event。对于无界数据流我们无法等待所有数据都到达，因为输入是无界的，并且在任何时间点都不会完成。处理无界数据通常要求以特定顺序（例如事件发生的顺序）获取event，以便能够推断结果完整性。<br><strong>有界流</strong>：有界数据流有明确定义的开始和结束，可以在执行任何计算之前通过获取所有数据来处理有界流，处理有界流不需要有序获取，因为可以始终对有界数据集进行排序，有界流的处理也称为批处理。</p>
-<p><strong>Flink简介</strong><br>Apache Flink是一个框架和分布式处理引擎，用于对无界和有界数据进行有状态计算。Flink设计为在所有常见的集群环境中进行，以内存速度和任何规模执行计算。</p>
 
       
     </div>
